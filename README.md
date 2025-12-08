@@ -1,7 +1,7 @@
 # mkosi-kernel
 
 This repository hosts mkosi configuration files intended for kernel development
-using mkosi. By default, a an image is built which is booted with qemu's direct
+using mkosi. By default, an image is built which is booted with qemu's direct
 kernel boot and VirtioFS.
 
 To get started, write the distribution you want to build to `mkosi.local.conf`
