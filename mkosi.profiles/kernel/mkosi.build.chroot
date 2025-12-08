@@ -72,7 +72,7 @@ if ! ((INCREMENTAL)); then
     echo "Generating compile-commands database"
     scripts/clang-tools/gen_compile_commands.py -d "$BUILDDIR" -o "$BUILDDIR"/compile_commands.json
 
-    make $EXTRA INSTALL_HDR_PATH="$DESTDIR/usr" headers_install
+    make -j "$(nproc)" $EXTRA INSTALL_HDR_PATH="$DESTDIR/usr" headers_install
 fi
 
 if [[ "$ARCHITECTURE" == "arm64" ]]; then
@@ -100,7 +100,7 @@ ln -sf usr/lib /tmp/lib
 ln -sf "$BUILDDIR" /tmp/usr/lib
 mkdir -p "$BUILDDIR/modules/$KERNEL_RELEASE"
 find "$BUILDDIR/modules" -mindepth 1 -maxdepth 1 ! -name "$KERNEL_RELEASE" -type d -exec rm -r {} +
-make $EXTRA INSTALL_MOD_PATH=/tmp MODLIB='$(INSTALL_MOD_PATH)/usr/lib/modules/$(KERNELRELEASE)' modules_install
+make -j "$(nproc)" $EXTRA INSTALL_MOD_PATH=/tmp MODLIB='$(INSTALL_MOD_PATH)/usr/lib/modules/$(KERNELRELEASE)' modules_install
 
 if ! ((INCREMENTAL)); then
     mkdir -p "$DESTDIR/usr/lib/modules/$KERNEL_RELEASE"
@@ -110,7 +110,7 @@ if ! ((INCREMENTAL)); then
         "$BUILDDIR/modules/$KERNEL_RELEASE" \
         "$DESTDIR/usr/lib/modules/$KERNEL_RELEASE" \
         --reflink=auto
-    make $EXTRA INSTALL_PATH="$DESTDIR/usr/lib/modules/$KERNEL_RELEASE" "$INSTALL"
+    make -j "$(nproc)" $EXTRA INSTALL_PATH="$DESTDIR/usr/lib/modules/$KERNEL_RELEASE" "$INSTALL"
     OUTPUT="$(jq --raw-output .Output <"$MKOSI_CONFIG")"
 fi
 
