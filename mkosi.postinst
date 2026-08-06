@@ -2,8 +2,4 @@
 # SPDX-License-Identifier: LGPL-2.1-or-later
 set -e
 
-useradd --create-home --user-group --uid 2000 fsgqa
-useradd --create-home --user-group --uid 3000 fsgqa2
-useradd --create-home --user-group --uid 4000 123456-fsgqa
-
 mkosi-chroot sh -c "command -v authselect >/dev/null && authselect select minimal || true"
