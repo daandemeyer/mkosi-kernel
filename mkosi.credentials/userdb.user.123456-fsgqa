@@ -1,0 +1,7 @@
+{
+    "userName": "123456-fsgqa",
+    "uid": 4000,
+    "disposition": "regular",
+    "enforcePasswordPolicy": false,
+    "shell": "/bin/bash"
+}
